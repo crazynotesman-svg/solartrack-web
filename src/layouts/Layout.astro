@@ -20,19 +20,51 @@ const t = useTranslations(lang);
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--
-			FOUC 防护：必须在客户端最先执行。
-			根据本地时间设置 <html data-theme>，避免主题闪烁。
+			FOUC 防护（关键渲染路径）：
+			1) 内联 <style> 在外部 CSS 加载前就给 <html> 上主题背景色/前景色，
+			  避免深色系统/深色浏览器下首屏出现“深色画布 → 浅色页面”的闪烁。
+			2) 内联 <script> 按本地时间设置 <html data-theme>，并同步 color-scheme。
 			时段划分：6–10 Morning | 10–16 Noon | 16–19 Golden Hour | 19–6 Night
 		-->
+		<style is:inline>
+			:root,
+			[data-theme='noon'] {
+				--page-bg: #eaf4ff;
+				--page-text: #0f172a;
+				--sun-color: #ffb703;
+			}
+			[data-theme='morning'] {
+				--page-bg: #f6f4ee;
+				--page-text: #33415c;
+				--sun-color: #ffd166;
+			}
+			[data-theme='golden-hour'] {
+				--page-bg: #ffe8d6;
+				--page-text: #5c3a21;
+				--sun-color: #f77f00;
+			}
+			[data-theme='night'] {
+				--page-bg: #0b1220;
+				--page-text: #e2e8f0;
+				--sun-color: #f4f1de;
+			}
+			html {
+				background-color: var(--page-bg);
+				color: var(--page-text);
+			}
+		</style>
 		<script is:inline>
 			(function () {
 				var hour = new Date().getHours();
-				var theme;
-				if (hour >= 6 && hour < 10) theme = 'morning';
-				else if (hour >= 10 && hour < 16) theme = 'noon';
-				else if (hour >= 16 && hour < 19) theme = 'golden-hour';
-				else theme = 'night';
-				document.documentElement.setAttribute('data-theme', theme);
+				var theme, bg, dark;
+				if (hour >= 6 && hour < 10) { theme = 'morning'; bg = '#f6f4ee'; dark = false; }
+				else if (hour >= 10 && hour < 16) { theme = 'noon'; bg = '#eaf4ff'; dark = false; }
+				else if (hour >= 16 && hour < 19) { theme = 'golden-hour'; bg = '#ffe8d6'; dark = false; }
+				else { theme = 'night'; bg = '#0b1220'; dark = true; }
+				var d = document.documentElement;
+				d.setAttribute('data-theme', theme);
+				d.style.backgroundColor = bg;
+				d.style.colorScheme = dark ? 'dark' : 'light';
 			})();
 		</script>
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
