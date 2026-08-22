@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://solartrack.100ideas.net/sitemap-index.xml

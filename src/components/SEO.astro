@@ -21,6 +21,7 @@ const t = useTranslations(lang);
 const pageTitle = title ?? t('site.title');
 const pageDescription = description ?? t('site.description');
 const ogImage = new URL(Astro.props.image ?? OG_IMAGE_PATH, Astro.site).href;
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 
 // SoftwareApplication 结构化数据（App 专用）
 const softwareAppJsonLd = {
@@ -42,12 +43,14 @@ const softwareAppJsonLd = {
 
 <!-- SEO meta -->
 <meta name="description" content={pageDescription} />
+<link rel="canonical" href={pageUrl} />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={pageDescription} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:url" content={pageUrl} />
 <meta property="og:site_name" content="SolarTrack" />
 
 <!-- Twitter Card -->
