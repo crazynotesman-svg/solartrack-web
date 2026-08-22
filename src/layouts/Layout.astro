@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import { getLangFromUrl, useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+	title?: string;
+	description?: string;
+	lang?: Lang;
+}
+
+const { title, description } = Astro.props;
+const lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<!doctype html>
+<html lang={lang} data-theme="noon">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--
+			FOUC 防护：必须在客户端最先执行。
+			根据本地时间设置 <html data-theme>，避免主题闪烁。
+			时段划分：6–10 Morning | 10–16 Noon | 16–19 Golden Hour | 19–6 Night
+		-->
+		<script is:inline>
+			(function () {
+				var hour = new Date().getHours();
+				var theme;
+				if (hour >= 6 && hour < 10) theme = 'morning';
+				else if (hour >= 10 && hour < 16) theme = 'noon';
+				else if (hour >= 16 && hour < 19) theme = 'golden-hour';
+				else theme = 'night';
+				document.documentElement.setAttribute('data-theme', theme);
+			})();
+		</script>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title ?? t('site.title')}</title>
+		<SEO title={title} description={description} />
+	</head>
+	<body class="min-h-dvh antialiased">
+		<slot />
+	</body>
+</html>

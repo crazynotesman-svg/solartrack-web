@@ -1,0 +1,60 @@
+---
+// ---------------------------------------------------------------------------
+// SEO — 公共 <head> 组件
+// - 标准 Open Graph / Twitter Card 标签
+// - SoftwareApplication 结构化数据（JSON-LD，面向 iOS App）
+// 用法：<SEO title="…" description="…" />（缺省时使用当前语言站点文案）
+// ---------------------------------------------------------------------------
+import { getLangFromUrl, useTranslations } from '../i18n/ui';
+import { getAppStoreUrl, OG_IMAGE_PATH } from '../lib/site';
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+}
+
+const { title, description } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const pageTitle = title ?? t('site.title');
+const pageDescription = description ?? t('site.description');
+const ogImage = new URL(Astro.props.image ?? OG_IMAGE_PATH, Astro.site).href;
+
+// SoftwareApplication 结构化数据（App 专用）
+const softwareAppJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'SoftwareApplication',
+	name: 'SolarTrack',
+	applicationCategory: 'PhotographyApplication',
+	operatingSystem: 'iOS',
+	url: getAppStoreUrl('en'), // 结构化数据统一指向美区（含归因参数）
+	offers: {
+		'@type': 'Offer',
+		price: '0',
+		priceCurrency: 'USD',
+	},
+	description:
+		'SolarTrack is an iOS app that tracks sunrise, sunset and golden hours wherever you are.',
+};
+---
+
+<!-- SEO meta -->
+<meta name="description" content={pageDescription} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDescription} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="SolarTrack" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={pageDescription} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Schema.org: SoftwareApplication -->
+<script type="application/ld+json" set:html={JSON.stringify(softwareAppJsonLd)} />

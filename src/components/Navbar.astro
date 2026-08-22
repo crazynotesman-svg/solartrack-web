@@ -1,0 +1,75 @@
+---
+import { languages, defaultLang, getLangFromUrl, getLocalizedUrl, useTranslations } from '../i18n/ui';
+import { getAppStoreUrl } from '../lib/site';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const appStoreUrl = getAppStoreUrl(lang);
+
+const navItems = [
+	{ key: 'nav.home', href: getLocalizedUrl('', lang) },
+	{ key: 'nav.features', href: getLocalizedUrl('#features', lang) },
+	{ key: 'nav.privacy', href: getLocalizedUrl('privacy', lang) },
+] as const;
+---
+
+<header class="sticky top-0 z-40 border-b border-line bg-page/80 backdrop-blur-md">
+	<div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
+		<!-- Logo -->
+		<a
+			href={getLocalizedUrl('', lang)}
+			class="flex items-center gap-2 text-sm font-semibold tracking-tight text-ink"
+			aria-label="SolarTrack"
+		>
+			<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+				<circle cx="12" cy="12" r="10" stroke="var(--sun-color)" stroke-width="1.6" />
+				<circle cx="12" cy="12" r="4.2" fill="var(--sun-color)" />
+			</svg>
+			<span>SolarTrack</span>
+		</a>
+
+		<!-- 主导航 -->
+		<nav class="hidden items-center gap-6 text-sm text-ink/80 sm:flex" aria-label={t('nav.home')}>
+			{
+				navItems.map((item) => (
+					<a href={item.href} class="transition-colors hover:text-ink">
+						{t(item.key)}
+					</a>
+				))
+			}
+		</nav>
+
+		<!-- 右侧：下载按钮 + 语言切换 -->
+		<div class="flex items-center gap-3">
+		<a
+			href={appStoreUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="hidden rounded-full px-4 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-90 sm:inline-block"
+			style="background-color: var(--sun-color)"
+		>
+				{t('nav.appstore')}
+			</a>
+
+			<div class="relative">
+				<label for="lang-select" class="sr-only">Language</label>
+				<select
+					id="lang-select"
+					class="cursor-pointer rounded-full border border-line bg-transparent px-3 py-1.5 text-sm text-ink outline-none"
+					onchange="location.href = this.value"
+				>
+					{
+						Object.entries(languages).map(([code, label]) => (
+							<option
+								value={getLocalizedUrl('', code as keyof typeof languages)}
+								selected={code === lang}
+							>
+								{label}
+							</option>
+						))
+					}
+				</select>
+			</div>
+		</div>
+	</div>
+</header>

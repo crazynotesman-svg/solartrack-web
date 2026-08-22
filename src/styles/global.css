@@ -1,0 +1,76 @@
+/* ---------------------------------------------------------------------------
+   SolarTrack — 全局样式（Tailwind CSS v4）
+   时间响应式界面：基于 <html data-theme> 切换 4 个时段的背景色与主文本色
+   ------------------------------------------------------------------------- */
+
+@import 'tailwindcss';
+
+/* 暴露为 Tailwind 工具类：bg-page / text-ink / border-line 等 */
+@theme inline {
+	--color-page: var(--page-bg);
+	--color-ink: var(--page-text);
+	--color-line: var(--page-line);
+	--color-sun: var(--sun-color);
+}
+
+/* 兜底主题（JS 未执行时）：Noon */
+:root,
+[data-theme='noon'] {
+	--page-bg: #eaf4ff; /* 明亮蓝天 */
+	--page-text: #0f172a; /* 深蓝墨色 */
+	--page-line: rgba(15, 23, 42, 0.14);
+	--sun-color: #ffb703;
+	--shadow-rgb: 15, 23, 42; /* 阴影颜色（rgb 三元组） */
+}
+
+/* 清晨 06:00–10:00：柔和晨蓝，微暖 */
+[data-theme='morning'] {
+	--page-bg: #f6f4ee;
+	--page-text: #33415c;
+	--page-line: rgba(51, 65, 92, 0.14);
+	--sun-color: #ffd166;
+	--shadow-rgb: 51, 65, 92;
+}
+
+/* 正午 10:00–16:00：明亮蓝天 */
+[data-theme='noon'] {
+	--page-bg: #eaf4ff;
+	--page-text: #0f172a;
+	--page-line: rgba(15, 23, 42, 0.14);
+	--sun-color: #ffb703;
+	--shadow-rgb: 15, 23, 42;
+}
+
+/* 黄金时刻 16:00–19:00：暖橙余晖 */
+[data-theme='golden-hour'] {
+	--page-bg: #ffe8d6;
+	--page-text: #5c3a21;
+	--page-line: rgba(92, 58, 33, 0.16);
+	--sun-color: #f77f00;
+	--shadow-rgb: 92, 58, 33;
+}
+
+/* 夜晚 19:00–06:00：深邃夜空 */
+[data-theme='night'] {
+	--page-bg: #0b1220;
+	--page-text: #e2e8f0;
+	--page-line: rgba(226, 232, 240, 0.16);
+	--sun-color: #f4f1de;
+	--shadow-rgb: 0, 0, 0;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background-color: var(--page-bg);
+	color: var(--page-text);
+	transition:
+		background-color 0.8s ease,
+		color 0.8s ease;
+	font-family:
+		'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		'PingFang SC', 'Hiragino Sans', 'Noto Sans JP', 'Noto Sans SC',
+		sans-serif;
+}

@@ -1,0 +1,268 @@
+---
+// ---------------------------------------------------------------------------
+// InteractiveHero — 可拖拽太阳 + 动态阴影系统（Vanilla JS，无框架）
+// 太阳位置 → 实时计算到 mockup 中心的向量 → 注入 CSS 变量 → 阴影反向投射
+// ---------------------------------------------------------------------------
+import { getLangFromUrl, useTranslations } from '../i18n/ui';
+import { getAppStoreUrl } from '../lib/site';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const appStoreUrl = getAppStoreUrl(lang);
+---
+
+<section class="relative">
+	<!-- 顶部文案（SEO 主标题） -->
+	<div class="relative z-10 mx-auto max-w-3xl px-4 pt-16 pb-4 text-center sm:pt-24">
+		<span
+			class="mb-6 inline-flex items-center gap-2 rounded-full border border-line px-4 py-1.5 text-xs font-medium text-ink/80"
+		>
+			<span class="h-1.5 w-1.5 rounded-full" style="background-color: var(--sun-color)"></span>
+			{t('hero.badge')}
+		</span>
+		<h1 class="text-4xl font-bold leading-tight tracking-tight text-ink sm:text-6xl">
+			{t('hero.title')}
+		</h1>
+		<p class="mt-5 text-base leading-relaxed text-ink/70 sm:text-lg">{t('hero.subtitle')}</p>
+		<div class="mt-8 flex flex-col items-center gap-3" id="download">
+			<a
+				href={appStoreUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-transform hover:scale-[1.03]"
+				style="background-color: var(--sun-color)"
+			>
+				<!-- App Store 图标 -->
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+				</svg>
+				{t('hero.cta')}
+			</a>
+			<span class="text-xs text-ink/60">{t('hero.cta.sub')}</span>
+		</div>
+	</div>
+
+	<!-- 交互画布：太阳 + 演示对象 -->
+	<div
+		id="sky-container"
+		class="relative mt-4 flex h-[80vh] w-full items-center justify-center overflow-hidden"
+	>
+		<!-- 地平线渐变（随主题背景色） -->
+		<div
+			class="pointer-events-none absolute inset-x-0 bottom-0 h-40"
+			style="background: linear-gradient(to top, rgba(0,0,0,0.08), transparent)"
+			aria-hidden="true"
+		></div>
+
+		<!-- 可拖拽太阳 -->
+		<div
+			id="draggable-sun"
+			class="absolute z-20 h-24 w-24 cursor-grab rounded-full"
+			role="slider"
+			aria-label="Sun position"
+			aria-valuemin="0"
+			aria-valuemax="100"
+		></div>
+
+		<!-- 演示对象：模拟 App 界面（阴影随太阳位置动态投射） -->
+		<div
+			id="mockup-object"
+			class="relative z-10 w-[320px] rounded-3xl border border-white/20 bg-white/10 p-8 text-center backdrop-blur-md sm:w-[380px]"
+		>
+			<div class="text-xs font-medium uppercase tracking-[0.2em] text-ink/60">SolarTrack</div>
+			<div class="mt-4 text-5xl font-bold tabular-nums text-ink">06:12</div>
+			<div class="mt-1 text-sm text-ink/70">
+				{t('mockup.sunrise')} · {t('mockup.sunset')} 18:47
+			</div>
+
+			<!-- 太阳轨迹占位 -->
+			<div class="mt-6 flex items-center justify-center" aria-hidden="true">
+				<span class="h-1.5 w-1.5 rounded-full" style="background-color: var(--sun-color)"></span>
+				<span class="mx-1 h-px w-10" style="background: linear-gradient(to right, var(--sun-color), transparent)"></span>
+				<span class="h-1.5 w-1.5 rounded-full opacity-40" style="background-color: var(--sun-color)"></span>
+				<span class="mx-1 h-px w-10" style="background: linear-gradient(to right, var(--sun-color), transparent)"></span>
+				<span class="h-1.5 w-1.5 rounded-full opacity-20" style="background-color: var(--sun-color)"></span>
+			</div>
+
+			<!-- 黄金时刻卡片 -->
+			<div class="mt-6 rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-left">
+				<div class="text-[11px] uppercase tracking-wider text-ink/50">
+					{t('mockup.goldenHour')}
+				</div>
+				<div class="mt-0.5 text-lg font-semibold text-ink">17:32 – 18:47</div>
+				<div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+					<div class="h-full w-2/3 rounded-full" style="background-color: var(--sun-color)"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 拖拽提示 -->
+		<p
+			class="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap text-xs text-ink/50"
+			id="drag-hint"
+		>
+			☀ {t('hero.dragHint')}
+		</p>
+	</div>
+</section>
+
+<style>
+	/* --- 组件根节点 CSS 变量（默认值 = 太阳初始位置右上角） --- */
+	#sky-container {
+		--sun-x: 72%;
+		--sun-y: 22%;
+		--shadow-x: -130px;
+		--shadow-y: 90px;
+		--shadow-blur: 60px;
+		--shadow-alpha: 0.5;
+	}
+
+	/* --- 太阳：颜色来自 --sun-color，带光晕 --- */
+	#draggable-sun {
+		left: var(--sun-x);
+		top: var(--sun-y);
+		background: radial-gradient(circle at 35% 35%, #fff8e1, var(--sun-color) 55%, var(--sun-color) 100%);
+		box-shadow:
+			0 0 40px 14px color-mix(in srgb, var(--sun-color) 55%, transparent),
+			0 0 90px 30px color-mix(in srgb, var(--sun-color) 25%, transparent);
+		/* 松手后平滑回归 */
+		transition:
+			left 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+			top 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+		/* 触摸拖拽时不滚动页面 */
+		touch-action: none;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+
+	#draggable-sun.dragging {
+		cursor: grabbing;
+		/* 拖拽中即时跟随，关闭过渡 */
+		transition: none;
+	}
+
+	/* --- 演示对象：阴影绑定太阳向量（方向负相关） --- */
+	#mockup-object {
+		box-shadow:
+			var(--shadow-x) var(--shadow-y) var(--shadow-blur) 0
+				rgba(var(--shadow-rgb), var(--shadow-alpha));
+		transition: box-shadow 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	#mockup-object.no-transition {
+		transition: none;
+	}
+</style>
+
+<script>
+	// -------------------------------------------------------------------------
+	// 拖拽太阳 → 实时计算阴影向量 → 注入 CSS 变量
+	// 使用 Pointer Events（统一鼠标 mouse* 与触摸 touch*，现代浏览器全覆盖）
+	// -------------------------------------------------------------------------
+	(function () {
+		const sky = document.getElementById('sky-container');
+		const sun = document.getElementById('draggable-sun');
+		const mockup = document.getElementById('mockup-object');
+		const hint = document.getElementById('drag-hint');
+		if (!sky || !sun || !mockup) return;
+
+		// 太阳位置（百分比，相对 sky-container）
+		let sunX = parseFloat(getComputedStyle(sky).getPropertyValue('--sun-x')) || 72;
+		let sunY = parseFloat(getComputedStyle(sky).getPropertyValue('--sun-y')) || 22;
+
+		// 拖拽状态
+		let dragging = false;
+		let startPointer = { x: 0, y: 0 };
+		let startSun = { x: 0, y: 0 };
+
+		function getCenter(el) {
+			const r = el.getBoundingClientRect();
+			return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+		}
+
+		// 核心算法：太阳中心 → mockup 中心向量 → 阴影变量
+		function updateShadow() {
+			const skyRect = sky.getBoundingClientRect();
+			const s = getCenter(sun);
+			const m = getCenter(mockup);
+
+			const dx = s.x - m.x; // 太阳在右 → dx > 0
+			const dy = s.y - m.y; // 太阳在下 → dy > 0
+			const dist = Math.hypot(dx, dy);
+			const diag = Math.hypot(skyRect.width, skyRect.height);
+
+			// 距离越远 → 阴影越长、越模糊、越淡
+			const strength = Math.min(1, dist / (diag * 0.55));
+			const k = 0.42; // 阴影长度系数
+			const shadowX = -dx * k; // 负相关：太阳在右，阴影投向左
+			const shadowY = -dy * k;
+			const blur = 18 + dist * 0.09;
+			const alpha = 0.22 + strength * 0.38;
+
+			sky.style.setProperty('--shadow-x', shadowX.toFixed(1) + 'px');
+			sky.style.setProperty('--shadow-y', shadowY.toFixed(1) + 'px');
+			sky.style.setProperty('--shadow-blur', blur.toFixed(1) + 'px');
+			sky.style.setProperty('--shadow-alpha', alpha.toFixed(3));
+			sky.style.setProperty('--sun-x', sunX.toFixed(1) + '%');
+			sky.style.setProperty('--sun-y', sunY.toFixed(1) + '%');
+		}
+
+		// 指针位置 → 容器内百分比（以太阳中心为基准）
+		function pointerToPct(clientX, clientY) {
+			const rect = sky.getBoundingClientRect();
+			const half = sun.offsetWidth / 2;
+			return {
+				x: ((clientX - rect.left - half) / rect.width) * 100,
+				y: ((clientY - rect.top - half) / rect.height) * 100,
+			};
+		}
+
+		function getPointer(e) {
+			return { x: e.clientX, y: e.clientY };
+		}
+
+		function onDown(e) {
+			e.preventDefault();
+			dragging = true;
+			sun.classList.add('dragging');
+			mockup.classList.add('no-transition');
+			if (hint) hint.style.opacity = '0';
+			startPointer = getPointer(e);
+			startSun = { x: sunX, y: sunY };
+			window.addEventListener('pointermove', onMove);
+			window.addEventListener('pointerup', onUp);
+			window.addEventListener('pointercancel', onUp);
+		}
+
+		function onMove(e) {
+			if (!dragging) return;
+			const p = getPointer(e);
+			const rect = sky.getBoundingClientRect();
+			sunX = startSun.x + ((p.x - startPointer.x) / rect.width) * 100;
+			sunY = startSun.y + ((p.y - startPointer.y) / rect.height) * 100;
+			sunX = Math.min(100, Math.max(0, sunX));
+			sunY = Math.min(100, Math.max(0, sunY));
+			sun.style.left = sunX + '%';
+			sun.style.top = sunY + '%';
+			updateShadow();
+		}
+
+		function onUp() {
+			dragging = false;
+			sun.classList.remove('dragging');
+			mockup.classList.remove('no-transition');
+			if (hint) hint.style.opacity = '1';
+			window.removeEventListener('pointermove', onMove);
+			window.removeEventListener('pointerup', onUp);
+			window.removeEventListener('pointercancel', onUp);
+		}
+
+		// 初始化：位置已由 CSS 变量设定，仅需按当前值计算一次阴影
+		sun.style.left = sunX + '%';
+		sun.style.top = sunY + '%';
+		updateShadow();
+
+		sun.addEventListener('pointerdown', onDown);
+		window.addEventListener('resize', updateShadow);
+	})();
+</script>

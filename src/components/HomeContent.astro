@@ -1,0 +1,32 @@
+---
+import InteractiveHero from './InteractiveHero.astro';
+import Features from './Features.astro';
+import Education from './Education.astro';
+import DownloadCTA from './DownloadCTA.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<main>
+	<!-- 1. Hero：可拖拽太阳 + 动态阴影 -->
+	<InteractiveHero />
+
+	<!-- 2. 功能区：3 个核心功能卡片 -->
+	<Features />
+
+	<!-- 3. 科普区：黄金时刻 / 蓝调时刻 -->
+	<Education />
+
+	<!-- 4. 下载转化区：App Store 大按钮 -->
+	<DownloadCTA />
+
+	<!-- 页脚 -->
+	<footer class="border-t border-line py-10 text-center text-sm text-ink/60">
+		<p>{t('footer.tagline')}</p>
+		<p class="mt-1 text-xs text-ink/40">
+			© {new Date().getFullYear()} SolarTrack. {t('footer.rights')}
+		</p>
+	</footer>
+</main>
