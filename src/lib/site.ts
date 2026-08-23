@@ -32,5 +32,5 @@ export function getAppStoreUrl(locale: string = 'en'): string {
 // 正式生产域名（astro.config.mjs 的 site 同步更新）
 export const SITE_URL = 'https://solartrack.100ideas.net';
 
-// OG 分享图（public/ 下的占位图，上线前替换为实拍/设计图）
-export const OG_IMAGE_PATH = '/og.svg';
+// OG 分享图（真实 App icon 合成的 1200×630 暗色图）
+export const OG_IMAGE_PATH = '/og.png';

@@ -46,28 +46,30 @@ export const ui = {
 		'mockup.sunset': 'Sunset',
 		'mockup.goldenHour': 'Golden hour',
 
-		// --- Features（功能） ---
-		'feature.ar.title': 'AR Trajectory',
-		'feature.ar.desc':
-			'Point your camera at the sky and watch the sun’s path overlay the real world in augmented reality.',
-		'feature.alerts.title': 'Golden Hour Alerts',
-		'feature.alerts.desc':
-			'Get notified the moment golden hour begins, so you never miss the light.',
-		'feature.map.title': 'Global Map Planning',
-		'feature.map.desc':
-			'Plan shoots anywhere on Earth with precise sun and moon times for any location.',
+		// --- Features（真实功能，对应 App 截图 1–5） ---
+		'feature.sunpath.title': 'Solar Dial & Sun Path',
+		'feature.sunpath.desc':
+			'See the sun’s arc for any date and place — plan the perfect shot before you arrive.',
+		'feature.ai.title': 'AI Photography Assistant',
+		'feature.ai.desc':
+			'Pick a scene and get the best time to shoot, with ready-to-use camera settings.',
+		'feature.weather.title': 'Weather & Blue Hour Forecast',
+		'feature.weather.desc':
+			'A daily quality score and the best shooting windows, so you never waste a trip.',
+		'feature.explore.title': 'Explore Worldwide',
+		'feature.explore.desc':
+			'Save favorite spots with precise coordinates and check the light anywhere.',
 
-		// --- Education（科普） ---
-		'education.title': 'Photography Light Guide',
+		// --- Education（科普：当日 6 段光影） ---
+		'education.title': 'Today’s Light, Hour by Hour',
 		'education.lead':
-			'Light is everything in photography. SolarTrack helps you chase the two most beautiful windows of the day.',
-		'education.golden.title': 'Golden Hour',
-		'education.golden.desc':
-			'The hour after sunrise and before sunset, when the sun sits low and light turns warm and soft — perfect for portraits and landscapes.',
-		'education.blue.title': 'Blue Hour',
-		'education.blue.desc':
-			'The twilight window right before sunrise or after sunset, when the sky glows deep blue and city lights begin to sparkle.',
-		'education.imageAlt': 'Golden hour landscape illustration',
+			'Light is everything in photography. SolarTrack breaks the day into the windows that matter most.',
+		'education.phase.golden': 'Golden Hour',
+		'education.phase.blue': 'Blue Hour',
+		'education.phase.daylight': 'Daylight',
+		'education.phase.night': 'Night',
+		'education.timelineNote': 'Times shown are an example for a sample location.',
+		'education.imageAlt': 'SolarTrack Today screen — sun-path dial and light timeline',
 
 		// --- Download CTA ---
 		'cta.title': 'Chase the light. Download SolarTrack.',
@@ -105,20 +107,25 @@ export const ui = {
 		'mockup.sunset': '日落',
 		'mockup.goldenHour': '黄金时刻',
 
-		'feature.ar.title': 'AR 轨迹预测',
-		'feature.ar.desc': '将相机对准天空，太阳的运行轨迹将以增强现实的方式叠加在真实世界中。',
-		'feature.alerts.title': '黄金时刻提醒',
-		'feature.alerts.desc': '黄金时刻开始的那一刻即刻通知你，绝不错过最好的光线。',
-		'feature.map.title': '全球地图规划',
-		'feature.map.desc': '在地球任何位置规划拍摄，获取精确的日出日落与月光时刻。',
+		// --- Features（真实功能，对应 App 截图 1–5） ---
+		'feature.sunpath.title': '太阳罗盘与轨迹',
+		'feature.sunpath.desc': '查看任意日期与地点的太阳弧线——到场前就规划好最佳拍摄时机。',
+		'feature.ai.title': 'AI 摄影助手',
+		'feature.ai.desc': '选择场景，得到最佳拍摄时段与可直接套用的相机参数。',
+		'feature.weather.title': '天气与蓝调预报',
+		'feature.weather.desc': '每日质量评分与最佳拍摄窗口，让每次出门都不白跑。',
+		'feature.explore.title': '全球探索',
+		'feature.explore.desc': '收藏常用地点并保存精确坐标，随时查看任何地方的光线。',
 
-		'education.title': '摄影光影指南',
-		'education.lead': '光线是摄影的灵魂。SolarTrack 帮你追到一天中最美的两段时间。',
-		'education.golden.title': '黄金时刻 Golden Hour',
-		'education.golden.desc': '日出后与日落前的一小时，太阳低垂、光线温暖柔和——人像与风光的最佳时机。',
-		'education.blue.title': '蓝调时刻 Blue Hour',
-		'education.blue.desc': '日出前与日落后的暮光窗口，天空泛起深蓝，城市灯光开始闪烁。',
-		'education.imageAlt': '黄金时刻风景插画',
+		// --- Education（科普：当日 6 段光影） ---
+		'education.title': '今日光影，逐小时',
+		'education.lead': '光线是摄影的灵魂。SolarTrack 把一天拆成最关键的几个窗口。',
+		'education.phase.golden': '黄金时刻',
+		'education.phase.blue': '蓝调时刻',
+		'education.phase.daylight': '日间',
+		'education.phase.night': '夜晚',
+		'education.timelineNote': '所示时间为示例地点的示例数据。',
+		'education.imageAlt': 'SolarTrack 今日界面——太阳轨迹罗盘与光影时间轴',
 
 		'cta.title': '追光而行，下载 SolarTrack',
 		'cta.subtitle': 'App Store 免费下载。日出、日落与黄金时刻——随时随地。',
@@ -154,21 +161,25 @@ export const ui = {
 		'mockup.sunset': '日の入り',
 		'mockup.goldenHour': 'ゴールデンアワー',
 
-		'feature.ar.title': 'AR 軌跡予測',
-		'feature.ar.desc': 'カメラを空に向けると、太陽の軌道が拡張現実で実世界に重なって見えます。',
-		'feature.alerts.title': 'ゴールデンアワー通知',
-		'feature.alerts.desc': 'ゴールデンアワーが始まった瞬間にお知らせ。最高の光を逃しません。',
-		'feature.map.title': '世界地図プランニング',
-		'feature.map.desc': '地球上のどこでも、正確な日の出・日の入り・月の時刻で撮影を計画。',
+		// --- Features（真实功能，对应 App 截图 1–5） ---
+		'feature.sunpath.title': '太陽ダイヤルと軌道',
+		'feature.sunpath.desc': '任意の日付・場所の太陽の弧を確認。到着前に最高のショットを計画できます。',
+		'feature.ai.title': 'AI 撮影アシスタント',
+		'feature.ai.desc': 'シーンを選ぶと最適な撮影時間と、そのまま使えるカメラ設定を提案。',
+		'feature.weather.title': '天気とブルーアワー予報',
+		'feature.weather.desc': '毎日の品質スコアと最適な撮影ウィンドウで、無駄な外出をなくします。',
+		'feature.explore.title': '世界中を探索',
+		'feature.explore.desc': 'お気に入りの場所を正確な座標で保存し、どこでも光をチェック。',
 
-		'education.title': '写真ライトガイド',
-		'education.lead': '光こそ写真のすべて。SolarTrack は一日で最も美しい時間帯へ導きます。',
-		'education.golden.title': 'ゴールデンアワー',
-		'education.golden.desc':
-			'日の出後・日の入り前の1時間。太陽が低く、光は暖かく柔らかく——ポートレートや風景に最適です。',
-		'education.blue.title': 'ブルーアワー',
-		'education.blue.desc': '日の出直前・日の入り後の薄明。空は深い青に染まり、街の灯りが輝き始めます。',
-		'education.imageAlt': 'ゴールデンアワーの風景イラスト',
+		// --- Education（科普：当日 6 段光影） ---
+		'education.title': '今日の光を、時系列に',
+		'education.lead': '写真において光はすべて。SolarTrack は一日を大切な窓に分けます。',
+		'education.phase.golden': 'ゴールデンアワー',
+		'education.phase.blue': 'ブルーアワー',
+		'education.phase.daylight': '日中',
+		'education.phase.night': '夜',
+		'education.timelineNote': '表示時間はサンプル地点の例です。',
+		'education.imageAlt': 'SolarTrack の「今日」画面——太陽軌道ダイヤルと光のタイムライン',
 
 		'cta.title': '光を追いかけよう。SolarTrack をダウンロード',
 		'cta.subtitle': 'App Store で無料。日の出・日の入り・ゴールデンアワー——どこでも。',
@@ -204,26 +215,30 @@ export const ui = {
 		'mockup.sunset': 'Sonnenuntergang',
 		'mockup.goldenHour': 'Goldene Stunde',
 
-		'feature.ar.title': 'AR-Trajektorie',
-		'feature.ar.desc':
-			'Richte die Kamera auf den Himmel und sieh den Sonnenverlauf in Augmented Reality über der Realität.',
-		'feature.alerts.title': 'Golden-Hour-Alarme',
-		'feature.alerts.desc':
-			'Werde genau dann benachrichtigt, wenn die goldene Stunde beginnt — verpasse nie das Licht.',
-		'feature.map.title': 'Weltweite Planung',
-		'feature.map.desc':
-			'Plane Aufnahmen an jedem Ort der Erde mit präzisen Sonnen- und Mondzeiten.',
+		// --- Features（真实功能，对应 App 截图 1–5） ---
+		'feature.sunpath.title': 'Sonnen-Dial & Pfad',
+		'feature.sunpath.desc':
+			'Sieh den Sonnenbogen für jedes Datum und jeden Ort — plane den perfekten Shot vorab.',
+		'feature.ai.title': 'KI-Foto-Assistent',
+		'feature.ai.desc':
+			'Wähle eine Szene und erhalte die beste Zeit plus direkt nutzbare Kameraeinstellungen.',
+		'feature.weather.title': 'Wetter- & Blaue-Stunde-Vorhersage',
+		'feature.weather.desc':
+			'Ein täglicher Qualitäts-Score und die besten Fenster, damit keine Fahrt umsonst ist.',
+		'feature.explore.title': 'Weltweit erkunden',
+		'feature.explore.desc':
+			'Speichere Lieblingsorte mit exakten Koordinaten und prüfe das Licht überall.',
 
-		'education.title': 'Lichtführer für Fotografie',
+		// --- Education（科普：当日 6 段光影） ---
+		'education.title': 'Das heutige Licht, Stunde für Stunde',
 		'education.lead':
-			'Licht ist alles in der Fotografie. SolarTrack hilft dir, die zwei schönsten Fenster des Tages zu erwischen.',
-		'education.golden.title': 'Goldene Stunde',
-		'education.golden.desc':
-			'Die Stunde nach Sonnenaufgang und vor Sonnenuntergang — warmes, weiches Licht, perfekt für Porträts und Landschaften.',
-		'education.blue.title': 'Blaue Stunde',
-		'education.blue.desc':
-			'Das Dämmerungsfenster vor Sonnenaufgang und nach Sonnenuntergang, wenn der Himmel tiefblau glüht.',
-		'education.imageAlt': 'Landschaftsillustration zur goldenen Stunde',
+			'Licht ist alles in der Fotografie. SolarTrack teilt den Tag in die wichtigsten Fenster.',
+		'education.phase.golden': 'Goldene Stunde',
+		'education.phase.blue': 'Blaue Stunde',
+		'education.phase.daylight': 'Tageslicht',
+		'education.phase.night': 'Nacht',
+		'education.timelineNote': 'Die gezeigten Zeiten sind ein Beispiel für einen Beispielort.',
+		'education.imageAlt': 'SolarTrack „Heute“ — Sonnen-Dial und Lichtzeitstrahl',
 
 		'cta.title': 'Jag das Licht. Lade SolarTrack herunter.',
 		'cta.subtitle':
@@ -260,26 +275,30 @@ export const ui = {
 		'mockup.sunset': 'Atardecer',
 		'mockup.goldenHour': 'Hora dorada',
 
-		'feature.ar.title': 'Trayectoria AR',
-		'feature.ar.desc':
-			'Apunta la cámara al cielo y observa la trayectoria del sol superpuesta al mundo real en realidad aumentada.',
-		'feature.alerts.title': 'Alertas de hora dorada',
-		'feature.alerts.desc':
-			'Recibe un aviso en el instante en que empieza la hora dorada: nunca pierdas la luz.',
-		'feature.map.title': 'Planificación global',
-		'feature.map.desc':
-			'Planifica tus tomas en cualquier lugar de la Tierra con horas exactas de sol y luna.',
+		// --- Features（真实功能，对应 App 截图 1–5） ---
+		'feature.sunpath.title': 'Dial y trayectoria solar',
+		'feature.sunpath.desc':
+			'Ve el arco del sol para cualquier fecha y lugar — planea la toma perfecta antes de llegar.',
+		'feature.ai.title': 'Asistente de fotografía IA',
+		'feature.ai.desc':
+			'Elige una escena y obtén el mejor momento, con ajustes de cámara listos para usar.',
+		'feature.weather.title': 'Pronóstico del tiempo y hora azul',
+		'feature.weather.desc':
+			'Una puntuación diaria de calidad y las mejores ventanas, para no malgastar un viaje.',
+		'feature.explore.title': 'Explora el mundo',
+		'feature.explore.desc':
+			'Guarda lugares favoritos con coordenadas exactas y consulta la luz en cualquier sitio.',
 
-		'education.title': 'Guía de luz fotográfica',
+		// --- Education（科普：当日 6 段光影） ---
+		'education.title': 'La luz de hoy, hora a hora',
 		'education.lead':
-			'La luz lo es todo en fotografía. SolarTrack te ayuda a capturar las dos ventanas más bellas del día.',
-		'education.golden.title': 'Hora dorada',
-		'education.golden.desc':
-			'La hora tras el amanecer y antes del atardecer, cuando el sol está bajo y la luz es cálida y suave, ideal para retratos y paisajes.',
-		'education.blue.title': 'Hora azul',
-		'education.blue.desc':
-			'La ventana crepuscular justo antes del amanecer o después del atardecer, cuando el cielo brilla en azul profundo.',
-		'education.imageAlt': 'Ilustración de paisaje en hora dorada',
+			'La luz lo es todo en fotografía. SolarTrack divide el día en las ventanas que importan.',
+		'education.phase.golden': 'Hora dorada',
+		'education.phase.blue': 'Hora azul',
+		'education.phase.daylight': 'Luz diurna',
+		'education.phase.night': 'Noche',
+		'education.timelineNote': 'Las horas mostradas son un ejemplo para una ubicación de muestra.',
+		'education.imageAlt': 'Pantalla «Hoy» de SolarTrack — dial solar y línea de tiempo de luz',
 
 		'cta.title': 'Persigue la luz. Descarga SolarTrack.',
 		'cta.subtitle':
@@ -316,26 +335,30 @@ export const ui = {
 		'mockup.sunset': 'Pôr do sol',
 		'mockup.goldenHour': 'Hora dourada',
 
-		'feature.ar.title': 'Trajetória AR',
-		'feature.ar.desc':
-			'Aponte a câmera para o céu e veja a trajetória do sol sobreposta ao mundo real em realidade aumentada.',
-		'feature.alerts.title': 'Alertas de hora dourada',
-		'feature.alerts.desc':
-			'Seja avisado no instante em que a hora dourada começa — nunca perca a luz.',
-		'feature.map.title': 'Planejamento global',
-		'feature.map.desc':
-			'Planeje fotos em qualquer lugar da Terra com horários precisos de sol e lua.',
+		// --- Features（真实功能，对应 App 截图 1–5） ---
+		'feature.sunpath.title': 'Dial e trajetória solar',
+		'feature.sunpath.desc':
+			'Veja o arco do sol para qualquer data e lugar — planeje a foto perfeita antes de chegar.',
+		'feature.ai.title': 'Assistente de fotografia IA',
+		'feature.ai.desc':
+			'Escolha uma cena e receba o melhor horário, com ajustes de câmera prontos para usar.',
+		'feature.weather.title': 'Previsão do tempo e hora azul',
+		'feature.weather.desc':
+			'Um score diário de qualidade e as melhores janelas, para não perder uma viagem.',
+		'feature.explore.title': 'Explore o mundo',
+		'feature.explore.desc':
+			'Salve lugares favoritos com coordenadas exatas e veja a luz em qualquer lugar.',
 
-		'education.title': 'Guia de luz fotográfica',
+		// --- Education（科普：当日 6 段光影） ---
+		'education.title': 'A luz de hoje, hora a hora',
 		'education.lead':
-			'Luz é tudo na fotografia. O SolarTrack ajuda você a aproveitar as duas janelas mais bonitas do dia.',
-		'education.golden.title': 'Hora dourada',
-		'education.golden.desc':
-			'A hora após o nascer e antes do pôr do sol, quando a luz é quente e suave — perfeita para retratos e paisagens.',
-		'education.blue.title': 'Hora azul',
-		'education.blue.desc':
-			'A janela crepuscular antes do nascer ou depois do pôr do sol, quando o céu ganha um azul profundo.',
-		'education.imageAlt': 'Ilustração de paisagem na hora dourada',
+			'Luz é tudo na fotografia. O SolarTrack divide o dia nas janelas que importam.',
+		'education.phase.golden': 'Hora dourada',
+		'education.phase.blue': 'Hora azul',
+		'education.phase.daylight': 'Luz do dia',
+		'education.phase.night': 'Noite',
+		'education.timelineNote': 'Os horários mostrados são um exemplo para uma localização de amostra.',
+		'education.imageAlt': 'Tela «Hoje» do SolarTrack — dial solar e linha do tempo de luz',
 
 		'cta.title': 'Siga a luz. Baixe o SolarTrack.',
 		'cta.subtitle':
@@ -348,7 +371,7 @@ export const ui = {
 			'O SolarTrack respeita sua privacidade. Não coletamos, armazenamos nem compartilhamos nenhuma informação de localização pessoal. Todos os cálculos de trajetória são feitos localmente no seu dispositivo.',
 
 		'footer.tagline': 'Feito para quem persegue a luz.',
-		'footer.rights': 'Todos os direitos reservados.',
+		'footer.rights': 'Todos os direchos reservados.',
 	},
 	fr: {
 		'site.title': 'SolarTrack — Suivez le soleil, vivez dans la lumière',
@@ -372,26 +395,30 @@ export const ui = {
 		'mockup.sunset': 'Coucher du soleil',
 		'mockup.goldenHour': 'Heure dorée',
 
-		'feature.ar.title': 'Trajectoire AR',
-		'feature.ar.desc':
-			'Pointez la caméra vers le ciel et voyez la trajectoire du soleil se superposer au monde réel en réalité augmentée.',
-		'feature.alerts.title': 'Alertes heure dorée',
-		'feature.alerts.desc':
-			'Soyez notifié dès que l’heure dorée commence — ne ratez plus la lumière.',
-		'feature.map.title': 'Planification mondiale',
-		'feature.map.desc':
-			'Planifiez vos prises de vue n’importe où sur Terre avec des heures de soleil et de lune précises.',
+		// --- Features（真实功能，对应 App 截图 1–5） ---
+		'feature.sunpath.title': 'Cadran et trajectoire solaire',
+		'feature.sunpath.desc':
+			'Voyez l’arc du soleil pour toute date et tout lieu — planifiez la prise parfaite à l’avance.',
+		'feature.ai.title': 'Assistant photo IA',
+		'feature.ai.desc':
+			'Choisissez une scène et obtenez le meilleur moment, avec des réglages photo prêts à l’emploi.',
+		'feature.weather.title': 'Météo et heure bleue',
+		'feature.weather.desc':
+			'Un score de qualité quotidien et les meilleures fenêtres, pour ne plus perdre un déplacement.',
+		'feature.explore.title': 'Explorez le monde',
+		'feature.explore.desc':
+			'Enregistrez vos lieux favoris avec des coordonnées précises et vérifiez la lumière partout.',
 
-		'education.title': 'Guide de la lumière photo',
+		// --- Education（科普：当日 6 段光影） ---
+		'education.title': 'La lumière du jour, heure par heure',
 		'education.lead':
-			'La lumière est tout en photographie. SolarTrack vous aide à attraper les deux plus belles fenêtres de la journée.',
-		'education.golden.title': 'Heure dorée',
-		'education.golden.desc':
-			'L’heure après le lever et avant le coucher du soleil, quand la lumière est chaude et douce — idéale pour les portraits et les paysages.',
-		'education.blue.title': 'Heure bleue',
-		'education.blue.desc':
-			'La fenêtre crépusculaire juste avant le lever ou après le coucher du soleil, quand le ciel brille d’un bleu profond.',
-		'education.imageAlt': 'Illustration de paysage à l’heure dorée',
+			'La lumière est tout en photo. SolarTrack découpe la journée en fenêtres essentielles.',
+		'education.phase.golden': 'Heure dorée',
+		'education.phase.blue': 'Heure bleue',
+		'education.phase.daylight': 'Lumière du jour',
+		'education.phase.night': 'Nuit',
+		'education.timelineNote': 'Les horaires indiqués sont un exemple pour un lieu de démonstration.',
+		'education.imageAlt': 'Écran « Aujourd’hui » de SolarTrack — cadran solaire et timeline lumineuse',
 
 		'cta.title': 'Chassez la lumière. Téléchargez SolarTrack.',
 		'cta.subtitle':

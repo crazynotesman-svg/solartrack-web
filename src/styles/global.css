@@ -14,54 +14,63 @@
 	--color-card: var(--card-bg);
 }
 
-/* 兜底主题（JS 未执行时）：Noon */
+/*
+ * 暗色基底 + 时间微染色（站点整体为暗色，随时段轻微偏色）：
+ * - noon  ：冷调石板蓝（明亮时段）
+ * - morning：柔和冷灰（晨光）
+ * - golden-hour：深暖炭（余晖暖调）
+ * - night ：深邃海军蓝（夜空）
+ * 卡片 --card-bg 比背景略亮一档，形成"浮起"层次；文字统一浅色。
+ */
+
+/* 兜底主题（JS 未执行时）：Noon（冷调石板） */
 :root,
 [data-theme='noon'] {
-	--page-bg: #eaf4ff; /* 明亮蓝天 */
-	--page-text: #0f172a; /* 深蓝墨色 */
-	--page-line: rgba(15, 23, 42, 0.14);
+	--page-bg: #0f172a; /* 冷调石板蓝 */
+	--page-text: #e2e8f0; /* 浅色文字 */
+	--page-line: rgba(226, 232, 240, 0.12);
 	--sun-color: #ffb703;
-	--shadow-rgb: 15, 23, 42; /* 阴影颜色（rgb 三元组） */
-	--card-bg: #ffffff; /* 卡片：纯白，与蓝天背景拉开细微层次 */
+	--shadow-rgb: 0, 0, 0;
+	--card-bg: #182338; /* 卡片：比背景略亮一档 */
 }
 
-/* 清晨 06:00–10:00：柔和晨蓝，微暖 */
+/* 清晨 06:00–10:00：柔和冷灰，微蓝 */
 [data-theme='morning'] {
-	--page-bg: #f6f4ee;
-	--page-text: #33415c;
-	--page-line: rgba(51, 65, 92, 0.14);
+	--page-bg: #161b22;
+	--page-text: #dbe2ea;
+	--page-line: rgba(219, 226, 234, 0.12);
 	--sun-color: #ffd166;
-	--shadow-rgb: 51, 65, 92;
-	--card-bg: #fffdfb; /* 卡片：近白微暖，比晨色背景略亮 */
+	--shadow-rgb: 0, 0, 0;
+	--card-bg: #20272f;
 }
 
-/* 正午 10:00–16:00：明亮蓝天 */
+/* 正午 10:00–16:00：冷调石板蓝 */
 [data-theme='noon'] {
-	--page-bg: #eaf4ff;
-	--page-text: #0f172a;
-	--page-line: rgba(15, 23, 42, 0.14);
+	--page-bg: #0f172a;
+	--page-text: #e2e8f0;
+	--page-line: rgba(226, 232, 240, 0.12);
 	--sun-color: #ffb703;
-	--shadow-rgb: 15, 23, 42;
+	--shadow-rgb: 0, 0, 0;
 }
 
-/* 黄金时刻 16:00–19:00：暖橙余晖 */
+/* 黄金时刻 16:00–19:00：深暖炭，余晖暖调 */
 [data-theme='golden-hour'] {
-	--page-bg: #ffe8d6;
-	--page-text: #5c3a21;
-	--page-line: rgba(92, 58, 33, 0.16);
+	--page-bg: #1c140d;
+	--page-text: #f3e3d0;
+	--page-line: rgba(243, 227, 208, 0.14);
 	--sun-color: #f77f00;
-	--shadow-rgb: 92, 58, 33;
-	--card-bg: #fffaf3; /* 卡片：暖白，与橙调背景区分 */
+	--shadow-rgb: 0, 0, 0;
+	--card-bg: #2a1d12;
 }
 
-/* 夜晚 19:00–06:00：深邃夜空 */
+/* 夜晚 19:00–06:00：深邃海军蓝 */
 [data-theme='night'] {
 	--page-bg: #0b1220;
 	--page-text: #e2e8f0;
 	--page-line: rgba(226, 232, 240, 0.16);
 	--sun-color: #f4f1de;
 	--shadow-rgb: 0, 0, 0;
-	--card-bg: #131d31; /* 卡片：比夜空略亮的石板色，浮起层次 */
+	--card-bg: #131d31;
 }
 
 html {

@@ -1,7 +1,7 @@
 ---
 // ---------------------------------------------------------------------------
-// InteractiveHero — 可拖拽太阳 + 动态阴影系统（Vanilla JS，无框架）
-// 太阳位置 → 实时计算到 mockup 中心的向量 → 注入 CSS 变量 → 阴影反向投射
+// InteractiveHero — 可拖拽太阳(环境光) + 真实 App 截图手机
+// 太阳位置 → 注入 CSS 变量 → 驱动背景光晕 + 手机阴影，营造"用光塑形"的互动
 // ---------------------------------------------------------------------------
 import { getLangFromUrl, useTranslations } from '../i18n/ui';
 import { getAppStoreUrl } from '../lib/site';
@@ -42,63 +42,69 @@ const appStoreUrl = getAppStoreUrl(lang);
 		</div>
 	</div>
 
-	<!-- 交互画布：太阳 + 演示对象 -->
+	<!-- 交互画布：太阳(环境光) + 真实 App 截图手机 -->
 	<div
 		id="sky-container"
-		class="relative mt-4 flex h-[80vh] w-full items-center justify-center overflow-hidden"
+		class="relative mt-4 flex h-[78vh] w-full items-center justify-center overflow-hidden"
 	>
-		<!-- 地平线渐变（随主题背景色） -->
+		<!-- 深色渐变底（随主题背景色），增强暗色质感 -->
 		<div
-			class="pointer-events-none absolute inset-x-0 bottom-0 h-40"
-			style="background: linear-gradient(to top, rgba(0,0,0,0.08), transparent)"
+			class="pointer-events-none absolute inset-0"
+			style="background: radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--sun-color) 10%, transparent), transparent 60%)"
+			aria-hidden="true"
+		></div>
+
+		<!-- 太阳驱动的环境光晕（位置随 --sun-x/-y 移动） -->
+		<div
+			id="sun-glow"
+			class="pointer-events-none absolute inset-0"
 			aria-hidden="true"
 		></div>
 
 		<!-- 可拖拽太阳 -->
 		<div
 			id="draggable-sun"
-			class="absolute z-20 h-24 w-24 cursor-grab rounded-full"
+			class="absolute z-30 h-20 w-20 cursor-grab rounded-full"
 			role="slider"
 			aria-label="Sun position"
 			aria-valuemin="0"
 			aria-valuemax="100"
 		></div>
 
-		<!-- 演示对象：模拟 App 界面（阴影随太阳位置动态投射） -->
-		<div
-			id="mockup-object"
-			class="relative z-10 w-[320px] rounded-3xl border border-white/20 bg-white/10 p-8 text-center backdrop-blur-md sm:w-[380px]"
-		>
-			<div class="text-xs font-medium uppercase tracking-[0.2em] text-ink/60">SolarTrack</div>
-			<div class="mt-4 text-5xl font-bold tabular-nums text-ink">06:12</div>
-			<div class="mt-1 text-sm text-ink/70">
-				{t('mockup.sunrise')} · {t('mockup.sunset')} 18:47
+		<!-- 手机舞台：真实 App 截图 -->
+		<div class="relative z-20 flex items-center justify-center">
+			<!-- 副屏（Solar Dial），置于主屏后方，轻微旋转 -->
+			<div
+				class="absolute -right-6 top-6 w-[230px] -rotate-6 rounded-[2rem] border border-line bg-black/60 p-2 opacity-70 shadow-2xl sm:w-[260px]"
+				aria-hidden="true"
+			>
+				<img
+					src="/shots/2.webp"
+					alt=""
+					class="w-full rounded-[1.6rem]"
+					loading="lazy"
+					decoding="async"
+				/>
 			</div>
 
-			<!-- 太阳轨迹占位 -->
-			<div class="mt-6 flex items-center justify-center" aria-hidden="true">
-				<span class="h-1.5 w-1.5 rounded-full" style="background-color: var(--sun-color)"></span>
-				<span class="mx-1 h-px w-10" style="background: linear-gradient(to right, var(--sun-color), transparent)"></span>
-				<span class="h-1.5 w-1.5 rounded-full opacity-40" style="background-color: var(--sun-color)"></span>
-				<span class="mx-1 h-px w-10" style="background: linear-gradient(to right, var(--sun-color), transparent)"></span>
-				<span class="h-1.5 w-1.5 rounded-full opacity-20" style="background-color: var(--sun-color)"></span>
-			</div>
-
-			<!-- 黄金时刻卡片 -->
-			<div class="mt-6 rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-left">
-				<div class="text-[11px] uppercase tracking-wider text-ink/50">
-					{t('mockup.goldenHour')}
-				</div>
-				<div class="mt-0.5 text-lg font-semibold text-ink">17:32 – 18:47</div>
-				<div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-					<div class="h-full w-2/3 rounded-full" style="background-color: var(--sun-color)"></div>
-				</div>
+			<!-- 主屏（Today） -->
+			<div
+				id="mockup-object"
+				class="relative w-[260px] rounded-[2.4rem] border border-line bg-black p-2 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.9)] sm:w-[300px]"
+			>
+				<img
+					src="/shots/1.webp"
+					alt={t('education.imageAlt')}
+					class="w-full rounded-[2rem]"
+					loading="eager"
+					decoding="async"
+				/>
 			</div>
 		</div>
 
 		<!-- 拖拽提示 -->
 		<p
-			class="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap text-xs text-ink/50"
+			class="absolute bottom-6 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap text-xs text-ink/50"
 			id="drag-hint"
 		>
 			☀ {t('hero.dragHint')}
@@ -141,7 +147,17 @@ const appStoreUrl = getAppStoreUrl(lang);
 		transition: none;
 	}
 
-	/* --- 演示对象：阴影绑定太阳向量（方向负相关） --- */
+	/* --- 太阳驱动的环境光晕：跟随 --sun-x/-y --- */
+	#sun-glow {
+		background: radial-gradient(
+			420px circle at var(--sun-x) var(--sun-y),
+			color-mix(in srgb, var(--sun-color) 28%, transparent),
+			transparent 60%
+		);
+		transition: background 0.5s ease;
+	}
+
+	/* --- 主屏手机：阴影绑定太阳向量（方向负相关） --- */
 	#mockup-object {
 		box-shadow:
 			var(--shadow-x) var(--shadow-y) var(--shadow-blur) 0
@@ -156,7 +172,7 @@ const appStoreUrl = getAppStoreUrl(lang);
 
 <script>
 	// -------------------------------------------------------------------------
-	// 拖拽太阳 → 实时计算阴影向量 → 注入 CSS 变量
+	// 拖拽太阳 → 实时计算阴影向量 + 光晕位置 → 注入 CSS 变量
 	// 使用 Pointer Events（统一鼠标 mouse* 与触摸 touch*，现代浏览器全覆盖）
 	// -------------------------------------------------------------------------
 	(function () {

@@ -29,18 +29,18 @@ const t = useTranslations(lang);
 		<style is:inline>
 			:root,
 			[data-theme='noon'] {
-				--page-bg: #eaf4ff;
-				--page-text: #0f172a;
+				--page-bg: #0f172a;
+				--page-text: #e2e8f0;
 				--sun-color: #ffb703;
 			}
 			[data-theme='morning'] {
-				--page-bg: #f6f4ee;
-				--page-text: #33415c;
+				--page-bg: #161b22;
+				--page-text: #dbe2ea;
 				--sun-color: #ffd166;
 			}
 			[data-theme='golden-hour'] {
-				--page-bg: #ffe8d6;
-				--page-text: #5c3a21;
+				--page-bg: #1c140d;
+				--page-text: #f3e3d0;
 				--sun-color: #f77f00;
 			}
 			[data-theme='night'] {
@@ -60,24 +60,25 @@ const t = useTranslations(lang);
 		<script is:inline>
 			(function () {
 				var hour = new Date().getHours();
-				var theme, dark;
-				if (hour >= 6 && hour < 10) { theme = 'morning'; dark = false; }
-				else if (hour >= 10 && hour < 16) { theme = 'noon'; dark = false; }
-				else if (hour >= 16 && hour < 19) { theme = 'golden-hour'; dark = false; }
-				else { theme = 'night'; dark = true; }
+				var theme;
+				if (hour >= 6 && hour < 10) theme = 'morning';
+				else if (hour >= 10 && hour < 16) theme = 'noon';
+				else if (hour >= 16 && hour < 19) theme = 'golden-hour';
+				else theme = 'night';
 				var d = document.documentElement;
-				d.style.colorScheme = dark ? 'dark' : 'light';
+				/* 全站暗色基底：color-scheme 始终为 dark，避免浅色画布闪烁 */
+				d.style.colorScheme = 'dark';
 				/*
-				 * 首帧：<html> 已通过内联 style 着上为 noon（浅色），不会闪未样式深色画布。
-				 * 下一帧再把 data-theme 切到真实时段 → 触发 1.4s 平滑过渡（缓慢渐变，非一闪而过）。
+				 * 首帧：<html> 已通过内联 style 着上为暗色基底，不会闪浅色画布。
+				 * 下一帧再把 data-theme 切到真实时段 → 触发 1.4s 缓慢过渡（暗色随时间微染）。
 				 */
 				requestAnimationFrame(function () {
 					d.setAttribute('data-theme', theme);
 				});
 			})();
 		</script>
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" href="/icon-256.png" />
+		<link rel="apple-touch-icon" href="/icon-256.png" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title ?? t('site.title')}</title>
 		<SEO title={title} description={description} />
