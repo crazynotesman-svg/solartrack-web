@@ -67,10 +67,28 @@ body {
 	background-color: var(--page-bg);
 	color: var(--page-text);
 	transition:
-		background-color 0.8s ease,
-		color 0.8s ease;
+		background-color 1.4s ease,
+		color 1.4s ease;
 	font-family:
 		'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 		'PingFang SC', 'Hiragino Sans', 'Noto Sans JP', 'Noto Sans SC',
 		sans-serif;
+}
+
+/*
+ * 主题切换的平滑过渡（缓慢淡入淡出，而非瞬间跳变）：
+ * 仅作用于结构性容器（html/body/header/footer/main/section）的背景、文字、边框色，
+ * 不覆盖可交互元素的 hover 过渡（导航/按钮的 transition-colors 仍保持 150ms），
+ * 也不影响拖拽太阳的 left/top/box-shadow 动画（其 ID 选择器优先级更高）。
+ */
+html,
+body,
+header,
+footer,
+main,
+section {
+	transition:
+		background-color 1.4s ease,
+		color 1.4s ease,
+		border-color 1.4s ease;
 }

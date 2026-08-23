@@ -51,20 +51,29 @@ const t = useTranslations(lang);
 			html {
 				background-color: var(--page-bg);
 				color: var(--page-text);
+				/* 主题切换的平滑过渡：缓慢淡入淡出，而非瞬间跳变 */
+				transition:
+					background-color 1.4s ease,
+					color 1.4s ease;
 			}
 		</style>
 		<script is:inline>
 			(function () {
 				var hour = new Date().getHours();
-				var theme, bg, dark;
-				if (hour >= 6 && hour < 10) { theme = 'morning'; bg = '#f6f4ee'; dark = false; }
-				else if (hour >= 10 && hour < 16) { theme = 'noon'; bg = '#eaf4ff'; dark = false; }
-				else if (hour >= 16 && hour < 19) { theme = 'golden-hour'; bg = '#ffe8d6'; dark = false; }
-				else { theme = 'night'; bg = '#0b1220'; dark = true; }
+				var theme, dark;
+				if (hour >= 6 && hour < 10) { theme = 'morning'; dark = false; }
+				else if (hour >= 10 && hour < 16) { theme = 'noon'; dark = false; }
+				else if (hour >= 16 && hour < 19) { theme = 'golden-hour'; dark = false; }
+				else { theme = 'night'; dark = true; }
 				var d = document.documentElement;
-				d.setAttribute('data-theme', theme);
-				d.style.backgroundColor = bg;
 				d.style.colorScheme = dark ? 'dark' : 'light';
+				/*
+				 * 首帧：<html> 已通过内联 style 着上为 noon（浅色），不会闪未样式深色画布。
+				 * 下一帧再把 data-theme 切到真实时段 → 触发 1.4s 平滑过渡（缓慢渐变，非一闪而过）。
+				 */
+				requestAnimationFrame(function () {
+					d.setAttribute('data-theme', theme);
+				});
 			})();
 		</script>
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
