@@ -45,6 +45,11 @@ export const ui = {
 		'mockup.sunrise': 'Sunrise',
 		'mockup.sunset': 'Sunset',
 		'mockup.goldenHour': 'Golden hour',
+		'mockup.solarNoon': 'Solar noon',
+		'hero.readoutTitle': 'Today’s sun',
+		'hero.locButton': 'Use my location',
+		'hero.locApprox': 'Approx. · from your timezone',
+		'hero.locPrecise': 'Live · your location',
 
 		// --- Features（真实功能，对应 App 截图 1–5） ---
 		'feature.sunpath.title': 'Solar Dial & Sun Path',
@@ -68,7 +73,7 @@ export const ui = {
 		'education.phase.blue': 'Blue Hour',
 		'education.phase.daylight': 'Daylight',
 		'education.phase.night': 'Night',
-		'education.timelineNote': 'Times shown are an example for a sample location.',
+		'education.timelineNote': 'Times update live for your location.',
 		'education.imageAlt': 'SolarTrack Today screen — sun-path dial and light timeline',
 
 		// --- Download CTA ---
@@ -106,6 +111,11 @@ export const ui = {
 		'mockup.sunrise': '日出',
 		'mockup.sunset': '日落',
 		'mockup.goldenHour': '黄金时刻',
+		'mockup.solarNoon': '太阳正午',
+		'hero.readoutTitle': '今日太阳',
+		'hero.locButton': '使用我的位置',
+		'hero.locApprox': '近似值 · 按你的时区估算',
+		'hero.locPrecise': '实时 · 你的位置',
 
 		// --- Features（真实功能，对应 App 截图 1–5） ---
 		'feature.sunpath.title': '太阳罗盘与轨迹',
@@ -124,7 +134,7 @@ export const ui = {
 		'education.phase.blue': '蓝调时刻',
 		'education.phase.daylight': '日间',
 		'education.phase.night': '夜晚',
-		'education.timelineNote': '所示时间为示例地点的示例数据。',
+		'education.timelineNote': '时间会按你的当前位置实时更新。',
 		'education.imageAlt': 'SolarTrack 今日界面——太阳轨迹罗盘与光影时间轴',
 
 		'cta.title': '追光而行，下载 SolarTrack',
@@ -160,6 +170,11 @@ export const ui = {
 		'mockup.sunrise': '日の出',
 		'mockup.sunset': '日の入り',
 		'mockup.goldenHour': 'ゴールデンアワー',
+		'mockup.solarNoon': '太陽の南中',
+		'hero.readoutTitle': '今日の太陽',
+		'hero.locButton': '現在地を使用',
+		'hero.locApprox': '概算 · タイムゾーンから',
+		'hero.locPrecise': 'リアルタイム · 現在地',
 
 		// --- Features（真实功能，对应 App 截图 1–5） ---
 		'feature.sunpath.title': '太陽ダイヤルと軌道',
@@ -178,7 +193,7 @@ export const ui = {
 		'education.phase.blue': 'ブルーアワー',
 		'education.phase.daylight': '日中',
 		'education.phase.night': '夜',
-		'education.timelineNote': '表示時間はサンプル地点の例です。',
+		'education.timelineNote': '時刻はあなたの現在地に合わせてリアルタイムに更新されます。',
 		'education.imageAlt': 'SolarTrack の「今日」画面——太陽軌道ダイヤルと光のタイムライン',
 
 		'cta.title': '光を追いかけよう。SolarTrack をダウンロード',
@@ -214,6 +229,11 @@ export const ui = {
 		'mockup.sunrise': 'Sonnenaufgang',
 		'mockup.sunset': 'Sonnenuntergang',
 		'mockup.goldenHour': 'Goldene Stunde',
+		'mockup.solarNoon': 'Sonnenhöchststand',
+		'hero.readoutTitle': 'Die Sonne heute',
+		'hero.locButton': 'Meinen Standort verwenden',
+		'hero.locApprox': 'Näherung · aus Zeitzone',
+		'hero.locPrecise': 'Live · dein Standort',
 
 		// --- Features（真实功能，对应 App 截图 1–5） ---
 		'feature.sunpath.title': 'Sonnen-Dial & Pfad',
@@ -237,7 +257,7 @@ export const ui = {
 		'education.phase.blue': 'Blaue Stunde',
 		'education.phase.daylight': 'Tageslicht',
 		'education.phase.night': 'Nacht',
-		'education.timelineNote': 'Die gezeigten Zeiten sind ein Beispiel für einen Beispielort.',
+		'education.timelineNote': 'Die Zeiten aktualisieren sich live für deinen Standort.',
 		'education.imageAlt': 'SolarTrack „Heute“ — Sonnen-Dial und Lichtzeitstrahl',
 
 		'cta.title': 'Jag das Licht. Lade SolarTrack herunter.',
@@ -274,6 +294,11 @@ export const ui = {
 		'mockup.sunrise': 'Amanecer',
 		'mockup.sunset': 'Atardecer',
 		'mockup.goldenHour': 'Hora dorada',
+		'mockup.solarNoon': 'Mediodía solar',
+		'hero.readoutTitle': 'El sol de hoy',
+		'hero.locButton': 'Usar mi ubicación',
+		'hero.locApprox': 'Aprox. · según tu zona horaria',
+		'hero.locPrecise': 'En vivo · tu ubicación',
 
 		// --- Features（真实功能，对应 App 截图 1–5） ---
 		'feature.sunpath.title': 'Dial y trayectoria solar',
@@ -297,7 +322,7 @@ export const ui = {
 		'education.phase.blue': 'Hora azul',
 		'education.phase.daylight': 'Luz diurna',
 		'education.phase.night': 'Noche',
-		'education.timelineNote': 'Las horas mostradas son un ejemplo para una ubicación de muestra.',
+		'education.timelineNote': 'Los horarios se actualizan en vivo para tu ubicación.',
 		'education.imageAlt': 'Pantalla «Hoy» de SolarTrack — dial solar y línea de tiempo de luz',
 
 		'cta.title': 'Persigue la luz. Descarga SolarTrack.',
@@ -334,6 +359,11 @@ export const ui = {
 		'mockup.sunrise': 'Nascer do sol',
 		'mockup.sunset': 'Pôr do sol',
 		'mockup.goldenHour': 'Hora dourada',
+		'mockup.solarNoon': 'Meio-dia solar',
+		'hero.readoutTitle': 'O sol de hoje',
+		'hero.locButton': 'Usar minha localização',
+		'hero.locApprox': 'Aprox. · pelo seu fuso',
+		'hero.locPrecise': 'Ao vivo · sua localização',
 
 		// --- Features（真实功能，对应 App 截图 1–5） ---
 		'feature.sunpath.title': 'Dial e trajetória solar',
@@ -357,7 +387,7 @@ export const ui = {
 		'education.phase.blue': 'Hora azul',
 		'education.phase.daylight': 'Luz do dia',
 		'education.phase.night': 'Noite',
-		'education.timelineNote': 'Os horários mostrados são um exemplo para uma localização de amostra.',
+		'education.timelineNote': 'Os horários são atualizados em tempo real para a sua localização.',
 		'education.imageAlt': 'Tela «Hoje» do SolarTrack — dial solar e linha do tempo de luz',
 
 		'cta.title': 'Siga a luz. Baixe o SolarTrack.',
@@ -394,6 +424,11 @@ export const ui = {
 		'mockup.sunrise': 'Lever du soleil',
 		'mockup.sunset': 'Coucher du soleil',
 		'mockup.goldenHour': 'Heure dorée',
+		'mockup.solarNoon': 'Midi solaire',
+		'hero.readoutTitle': 'Le soleil aujourd’hui',
+		'hero.locButton': 'Utiliser ma position',
+		'hero.locApprox': 'Approx. · depuis ton fuseau',
+		'hero.locPrecise': 'En direct · ta position',
 
 		// --- Features（真实功能，对应 App 截图 1–5） ---
 		'feature.sunpath.title': 'Cadran et trajectoire solaire',
@@ -417,7 +452,7 @@ export const ui = {
 		'education.phase.blue': 'Heure bleue',
 		'education.phase.daylight': 'Lumière du jour',
 		'education.phase.night': 'Nuit',
-		'education.timelineNote': 'Les horaires indiqués sont un exemple pour un lieu de démonstration.',
+		'education.timelineNote': 'Les horaires se mettent à jour en direct pour votre position.',
 		'education.imageAlt': 'Écran « Aujourd’hui » de SolarTrack — cadran solaire et timeline lumineuse',
 
 		'cta.title': 'Chassez la lumière. Téléchargez SolarTrack.',

@@ -7,14 +7,14 @@ import { getLangFromUrl, useTranslations } from '../i18n/ui';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// 示例时段（数据来自 App 的示例地点，仅作示意）
+// 时段（示例时间为无 JS 兜底；客户端会按访客真实位置重新计算并覆盖）
 const phases = [
-	{ label: t('education.phase.golden'), time: '06:12 – 07:12', color: 'var(--sun-color)' },
-	{ label: t('education.phase.blue'), time: '07:12 – 07:39', color: '#3b82f6' },
-	{ label: t('education.phase.daylight'), time: '07:39 – 16:51', color: '#cbd5e1' },
-	{ label: t('education.phase.golden'), time: '16:51 – 17:47', color: 'var(--sun-color)' },
-	{ label: t('education.phase.blue'), time: '17:47 – 18:14', color: '#3b82f6' },
-	{ label: t('education.phase.night'), time: '18:14 – 06:12', color: '#475569' },
+	{ key: 'morning-golden', label: t('education.phase.golden'), time: '06:12 – 07:12', color: 'var(--sun-color)' },
+	{ key: 'morning-blue', label: t('education.phase.blue'), time: '07:12 – 07:39', color: '#3b82f6' },
+	{ key: 'daylight', label: t('education.phase.daylight'), time: '07:39 – 16:51', color: '#cbd5e1' },
+	{ key: 'evening-golden', label: t('education.phase.golden'), time: '16:51 – 17:47', color: 'var(--sun-color)' },
+	{ key: 'evening-blue', label: t('education.phase.blue'), time: '17:47 – 18:14', color: '#3b82f6' },
+	{ key: 'night', label: t('education.phase.night'), time: '18:14 – 06:12', color: '#475569' },
 ] as const;
 ---
 
@@ -42,7 +42,7 @@ const phases = [
 							/>
 							<div class="flex items-baseline justify-between gap-3">
 								<span class="font-medium text-ink">{p.label}</span>
-								<span class="shrink-0 text-sm tabular-nums text-ink/55">{p.time}</span>
+								<span class="shrink-0 text-sm tabular-nums text-ink/55" data-phase={p.key}>{p.time}</span>
 							</div>
 						</li>
 					))

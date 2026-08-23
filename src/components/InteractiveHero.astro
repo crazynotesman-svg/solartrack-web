@@ -71,21 +71,14 @@ const appStoreUrl = getAppStoreUrl(lang);
 			aria-valuemax="100"
 		></div>
 
-		<!-- 手机舞台：真实 App 截图 -->
+		<!-- 手机舞台：真实 App 截图（仅保留主屏，无重叠副屏） -->
 		<div class="relative z-20 flex items-center justify-center">
-			<!-- 副屏（Solar Dial），置于主屏后方，轻微旋转 -->
+			<!-- 主屏背后的柔和光晕，强化暗色质感（非手机，纯装饰） -->
 			<div
-				class="absolute -right-6 top-6 w-[230px] -rotate-6 rounded-[2rem] border border-line bg-black/60 p-2 opacity-70 shadow-2xl sm:w-[260px]"
+				class="pointer-events-none absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-3xl"
+				style="background: radial-gradient(circle, color-mix(in srgb, var(--sun-color) 22%, transparent), transparent 70%)"
 				aria-hidden="true"
-			>
-				<img
-					src="/shots/2.webp"
-					alt=""
-					class="w-full rounded-[1.6rem]"
-					loading="lazy"
-					decoding="async"
-				/>
-			</div>
+			></div>
 
 			<!-- 主屏（Today） -->
 			<div
@@ -109,6 +102,55 @@ const appStoreUrl = getAppStoreUrl(lang);
 		>
 			☀ {t('hero.dragHint')}
 		</p>
+	</div>
+
+	<!-- 今日太阳：真实计算读数（客户端按位置计算，无 JS 时显示占位） -->
+	<div
+		id="sun-readout"
+		class="relative z-20 mx-auto mt-10 flex w-full max-w-md flex-col items-center gap-4 rounded-2xl border border-line bg-card/60 px-5 py-4"
+	>
+		<div class="flex w-full items-center justify-between gap-3">
+			<span class="text-xs font-medium uppercase tracking-wide text-ink/55">{t('hero.readoutTitle')}</span>
+			<span class="text-xs text-ink/55">
+				<span data-when="timezone">{t('hero.locApprox')}</span>
+				<span data-when="geolocation" hidden>{t('hero.locPrecise')}</span>
+			</span>
+		</div>
+		<div class="grid w-full grid-cols-3 gap-3 text-center">
+			<div>
+				<div class="text-[11px] uppercase tracking-wide text-ink/50">{t('mockup.sunrise')}</div>
+				<div class="mt-1 text-lg font-semibold tabular-nums text-ink" data-sun="sunrise">--:--</div>
+			</div>
+			<div>
+				<div class="text-[11px] uppercase tracking-wide text-ink/50">{t('mockup.solarNoon')}</div>
+				<div class="mt-1 text-lg font-semibold tabular-nums text-ink" data-sun="solarNoon">--:--</div>
+			</div>
+			<div>
+				<div class="text-[11px] uppercase tracking-wide text-ink/50">{t('mockup.sunset')}</div>
+				<div class="mt-1 text-lg font-semibold tabular-nums text-ink" data-sun="sunset">--:--</div>
+			</div>
+		</div>
+		<button
+			id="loc-btn"
+			type="button"
+			class="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs font-medium text-ink/80 transition-colors hover:bg-white/5"
+		>
+			<svg
+				width="13"
+				height="13"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M12 21s-6-5.686-6-10a6 6 0 1 1 12 0c0 4.314-6 10-6 10z" />
+				<circle cx="12" cy="11" r="2" />
+			</svg>
+			{t('hero.locButton')}
+		</button>
 	</div>
 </section>
 
@@ -281,4 +323,57 @@ const appStoreUrl = getAppStoreUrl(lang);
 		sun.addEventListener('pointerdown', onDown);
 		window.addEventListener('resize', updateShadow);
 	})();
+</script>
+
+<!-- ---------------------------------------------------------------------------
+	H — 真实太阳计算：按访客位置计算日出/日落/黄金时刻，
+	   驱动全站时段染色、Hero 实时读数、Education 时间轴。
+	   全部在设备本地完成，不上送任何位置。
+--------------------------------------------------------------------------- -->
+<script>
+	import { getSunTimes, resolvePhase, formatTime, buildPhases } from '../lib/sun';
+	import { estimateLocation, requestPreciseLocation } from '../lib/location';
+
+	function apply(loc) {
+		const lang = document.documentElement.lang || 'en';
+		const now = new Date();
+		const sun = getSunTimes(now, loc.lat, loc.lng);
+
+		// 1) 全站暗色时段随“真实太阳相位”变化（替代纯墙钟近似）
+		document.documentElement.dataset.theme = resolvePhase(now, sun);
+
+		// 2) Hero 今日太阳读数
+		const setVal = (k, d) => {
+			const el = document.querySelector(`[data-sun="${k}"]`);
+			if (el) el.textContent = formatTime(d, lang);
+		};
+		setVal('sunrise', sun.sunrise);
+		setVal('solarNoon', sun.solarNoon);
+		setVal('sunset', sun.sunset);
+
+		// 3) 位置来源状态切换
+		document.querySelectorAll('[data-when]').forEach((el) => {
+			el.hidden = el.getAttribute('data-when') !== loc.source;
+		});
+
+		// 4) Education 6 段光影时间轴（真实计算覆盖示例）
+		buildPhases(sun).forEach((p) => {
+			const el = document.querySelector(`[data-phase="${p.key}"]`);
+			if (el) el.textContent = `${formatTime(p.start, lang)} – ${formatTime(p.end, lang)}`;
+		});
+	}
+
+	// 初始：时区粗算（无授权框，立即可用）
+	apply(estimateLocation());
+
+	// “使用我的位置”：弹地理授权框 → 精确计算
+	const btn = document.getElementById('loc-btn');
+	if (btn) {
+		btn.addEventListener('click', async () => {
+			btn.disabled = true;
+			const loc = await requestPreciseLocation();
+			apply(loc);
+			btn.disabled = false;
+		});
+	}
 </script>
