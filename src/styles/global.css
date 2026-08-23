@@ -5,12 +5,13 @@
 
 @import 'tailwindcss';
 
-/* 暴露为 Tailwind 工具类：bg-page / text-ink / border-line 等 */
+/* 暴露为 Tailwind 工具类：bg-page / text-ink / border-line / bg-card 等 */
 @theme inline {
 	--color-page: var(--page-bg);
 	--color-ink: var(--page-text);
 	--color-line: var(--page-line);
 	--color-sun: var(--sun-color);
+	--color-card: var(--card-bg);
 }
 
 /* 兜底主题（JS 未执行时）：Noon */
@@ -21,6 +22,7 @@
 	--page-line: rgba(15, 23, 42, 0.14);
 	--sun-color: #ffb703;
 	--shadow-rgb: 15, 23, 42; /* 阴影颜色（rgb 三元组） */
+	--card-bg: #ffffff; /* 卡片：纯白，与蓝天背景拉开细微层次 */
 }
 
 /* 清晨 06:00–10:00：柔和晨蓝，微暖 */
@@ -30,6 +32,7 @@
 	--page-line: rgba(51, 65, 92, 0.14);
 	--sun-color: #ffd166;
 	--shadow-rgb: 51, 65, 92;
+	--card-bg: #fffdfb; /* 卡片：近白微暖，比晨色背景略亮 */
 }
 
 /* 正午 10:00–16:00：明亮蓝天 */
@@ -48,6 +51,7 @@
 	--page-line: rgba(92, 58, 33, 0.16);
 	--sun-color: #f77f00;
 	--shadow-rgb: 92, 58, 33;
+	--card-bg: #fffaf3; /* 卡片：暖白，与橙调背景区分 */
 }
 
 /* 夜晚 19:00–06:00：深邃夜空 */
@@ -57,6 +61,7 @@
 	--page-line: rgba(226, 232, 240, 0.16);
 	--sun-color: #f4f1de;
 	--shadow-rgb: 0, 0, 0;
+	--card-bg: #131d31; /* 卡片：比夜空略亮的石板色，浮起层次 */
 }
 
 html {
