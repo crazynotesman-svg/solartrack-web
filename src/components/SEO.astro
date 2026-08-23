@@ -2,11 +2,12 @@
 // ---------------------------------------------------------------------------
 // SEO — 公共 <head> 组件
 // - 标准 Open Graph / Twitter Card 标签
-// - SoftwareApplication 结构化数据（JSON-LD，面向 iOS App）
-// 用法：<SEO title="…" description="…" />（缺省时使用当前语言站点文案）
+// - hreflang 互链（含 x-default）：@astrojs/sitemap 3.7.3 无法输出 x-default，
+//   此处由 HTML <head> 提供，Google 同样读取
+// - 结构化数据：Organization / WebSite / BreadcrumbList / SoftwareApplication
 // ---------------------------------------------------------------------------
-import { getLangFromUrl, useTranslations } from '../i18n/ui';
-import { getAppStoreUrl, OG_IMAGE_PATH } from '../lib/site';
+import { getLangFromUrl, useTranslations, languages, getLocalizedUrl } from '../i18n/ui';
+import { getAppStoreUrl, OG_IMAGE_PATH, SITE_URL } from '../lib/site';
 
 interface Props {
 	title?: string;
@@ -23,21 +24,77 @@ const pageDescription = description ?? t('site.description');
 const ogImage = new URL(Astro.props.image ?? OG_IMAGE_PATH, Astro.site).href;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 
-// SoftwareApplication 结构化数据（App 专用）
+// hreflang alternates（含 x-default）
+const HREFLANG = { en: 'en', zh: 'zh-CN', ja: 'ja', de: 'de', es: 'es', pt: 'pt', fr: 'fr' } as const;
+const pathSegs = Astro.url.pathname.split('/').filter(Boolean);
+const curLang = pathSegs[0] in languages ? (pathSegs[0] as keyof typeof languages) : 'en';
+const basePath = '/' + (curLang === 'en' ? pathSegs.join('/') : pathSegs.slice(1).join('/'));
+const hreflangLinks = Object.entries(HREFLANG).map(([code, hr]) => ({
+	hr,
+	href: new URL(getLocalizedUrl(basePath, code as keyof typeof languages), Astro.site).href,
+}));
+const xDefaultHref = new URL(getLocalizedUrl(basePath, 'en'), Astro.site).href;
+
+// og:locale 系列
+const OG_LOCALE = { en: 'en_US', zh: 'zh_CN', ja: 'ja_JP', de: 'de_DE', es: 'es_ES', pt: 'pt_BR', fr: 'fr_FR' } as const;
+const ogLocale = OG_LOCALE[lang as keyof typeof OG_LOCALE] ?? 'en_US';
+const ogLocaleAlternates = Object.values(OG_LOCALE).filter((l) => l !== ogLocale);
+
+// 结构化数据
+const orgId = 'https://solartrack.100ideas.net/#organization';
+const orgJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	'@id': orgId,
+	name: 'SolarTrack',
+	url: SITE_URL,
+	logo: new URL('/icon-256.png', Astro.site).href,
+	sameAs: [
+		'https://apps.apple.com/us/app/apple-store/id6789409918',
+		'https://www.instagram.com/100badideas/',
+		'https://100ideas.net',
+	],
+};
+const webSiteJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: 'SolarTrack',
+	url: SITE_URL,
+	inLanguage: Object.values(HREFLANG),
+	dateModified: '2026-08-23',
+	publisher: { '@id': orgId },
+};
+const crumbs = [{ name: t('nav.home'), url: new URL(getLocalizedUrl('', lang), Astro.site).href }];
+if (!['', '/'].includes(basePath)) {
+	const label = basePath.includes('privacy') ? t('nav.privacy') : basePath.replace('/', '');
+	crumbs.push({ name: label, url: pageUrl });
+}
+const breadcrumbJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: crumbs.map((c, i) => ({
+		'@type': 'ListItem',
+		position: i + 1,
+		name: c.name,
+		item: c.url,
+	})),
+};
 const softwareAppJsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'SoftwareApplication',
 	name: 'SolarTrack',
 	applicationCategory: 'PhotographyApplication',
 	operatingSystem: 'iOS',
-	url: getAppStoreUrl('en'), // 结构化数据统一指向美区（含归因参数）
+	isAccessibleForFree: true,
+	url: getAppStoreUrl('en'),
+	author: { '@id': orgId },
 	offers: {
 		'@type': 'Offer',
 		price: '0',
 		priceCurrency: 'USD',
 	},
 	description:
-		'SolarTrack is an iOS app that tracks sunrise, sunset and golden hours wherever you are.',
+		'SolarTrack is a free iOS app that shows sunrise, sunset, golden hour and blue hour times for any location, with a sun-path dial, an AI photography assistant, and a weather and blue-hour forecast.',
 };
 ---
 
@@ -45,13 +102,33 @@ const softwareAppJsonLd = {
 <meta name="description" content={pageDescription} />
 <link rel="canonical" href={pageUrl} />
 
+<!-- hreflang alternates（含 x-default） -->
+{
+	hreflangLinks.map((a) => (
+		<link rel="alternate" hreflang={a.hr} href={a.href} />
+	))
+}
+<link rel="alternate" hreflang="x-default" href={xDefaultHref} />
+
+<!-- 移动端浏览器主题色（暗色基底） -->
+<meta name="theme-color" content="#0f172a" />
+
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={pageDescription} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="SolarTrack — sunrise, sunset and golden hour tracker for iOS" />
 <meta property="og:url" content={pageUrl} />
 <meta property="og:site_name" content="SolarTrack" />
+<meta property="og:locale" content={ogLocale} />
+{
+	ogLocaleAlternates.map((l) => (
+		<meta property="og:locale:alternate" content={l} />
+	))
+}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -59,5 +136,8 @@ const softwareAppJsonLd = {
 <meta name="twitter:description" content={pageDescription} />
 <meta name="twitter:image" content={ogImage} />
 
-<!-- Schema.org: SoftwareApplication -->
+<!-- Schema.org 结构化数据 -->
+<script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+<script type="application/ld+json" set:html={JSON.stringify(webSiteJsonLd)} />
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
 <script type="application/ld+json" set:html={JSON.stringify(softwareAppJsonLd)} />

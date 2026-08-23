@@ -1,0 +1,21 @@
+# SolarTrack
+
+SolarTrack is a free iOS app that shows sunrise, sunset, golden hour and blue
+hour times for any location, with a sun-path dial, an AI photography assistant,
+and a weather and blue-hour forecast. All sun calculations run locally on
+device; no location data ever leaves the phone.
+
+## Pages
+- /        : Home — what SolarTrack does, features, how light works, FAQ, download
+- /privacy : Privacy policy (local-only computation, no data collection)
+
+## Key facts
+- Free on iOS (App Store)
+- Works offline for all sun times; weather forecast is optional/online
+- Covers every latitude and longitude in the world
+- Does not collect, store or share personal location data
+- Golden hour ≈ 60 min after sunrise / before sunset; blue hour ≈ 20–30 min
+
+## Brand
+- Made by 100ideas.net — https://100ideas.net
+- Instagram — https://www.instagram.com/100badideas/

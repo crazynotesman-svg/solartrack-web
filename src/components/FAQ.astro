@@ -1,0 +1,47 @@
+---
+// ---------------------------------------------------------------------------
+// FAQ — 可见问答区块（GEO：为 AI 引擎提供可被直接抽取的 Q&A 素材）
+// 同时输出 FAQPage JSON-LD（低成本；内容本身才是高价值来源）
+// ---------------------------------------------------------------------------
+import { getLangFromUrl, useTranslations, type UI } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const qa: Array<[keyof UI, keyof UI]> = [
+	['faq.q1', 'faq.a1'],
+	['faq.q2', 'faq.a2'],
+	['faq.q3', 'faq.a3'],
+	['faq.q4', 'faq.a4'],
+	['faq.q5', 'faq.a5'],
+	['faq.q6', 'faq.a6'],
+];
+const pairs = qa.map(([q, a]) => ({ q: t(q), a: t(a) }));
+
+const faqJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: pairs.map((p) => ({
+		'@type': 'Question',
+		name: p.q,
+		acceptedAnswer: { '@type': 'Answer', text: p.a },
+	})),
+};
+---
+
+<section id="faq" class="mx-auto max-w-3xl scroll-mt-20 px-4 py-24 sm:px-6">
+	<h2 class="text-center text-2xl font-bold tracking-tight text-ink sm:text-3xl">{t('faq.title')}</h2>
+
+	<div class="mt-10 space-y-6">
+		{
+			pairs.map((p) => (
+				<div class="rounded-2xl border border-line bg-card/50 px-5 py-4">
+					<h3 class="text-base font-semibold text-ink">{p.q}</h3>
+					<p class="mt-2 text-sm leading-relaxed text-ink/70">{p.a}</p>
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />

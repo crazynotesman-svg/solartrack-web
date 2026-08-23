@@ -1,4 +1,16 @@
 User-agent: *
 Allow: /
 
+# GEO：显式放行主流 AI 检索爬虫（避免 CDN/默认规则误伤）
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://solartrack.100ideas.net/sitemap-index.xml

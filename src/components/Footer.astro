@@ -1,0 +1,59 @@
+---
+// ---------------------------------------------------------------------------
+// Footer — 全站页脚（含内部链接 + 实体品牌交叉引用，强化 SEO/GEO 内链与权威）
+// 由 Layout 统一引入，首页与隐私页共享
+// ---------------------------------------------------------------------------
+import { getLangFromUrl, useTranslations, getLocalizedUrl } from '../i18n/ui';
+import { getAppStoreUrl } from '../lib/site';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const appStoreUrl = getAppStoreUrl(lang);
+
+const links = [
+	{ label: t('nav.home'), href: getLocalizedUrl('', lang) },
+	{ label: t('nav.features'), href: getLocalizedUrl('#features', lang) },
+	{ label: t('nav.privacy'), href: getLocalizedUrl('privacy', lang) },
+];
+---
+
+<footer class="border-t border-line bg-page/60">
+	<div class="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+		<div
+			class="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left"
+		>
+			<div>
+				<p class="text-sm font-medium text-ink/80">{t('footer.tagline')}</p>
+				<p class="mt-1 text-xs text-ink/45">
+					© {new Date().getFullYear()} SolarTrack. {t('footer.rights')}
+				</p>
+				<p class="mt-1 text-xs text-ink/40">{t('footer.updated')}</p>
+			</div>
+			<nav class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm" aria-label="Footer">
+				{
+					links.map((l) => (
+						<a href={l.href} class="text-ink/60 transition-colors hover:text-ink">
+							{l.label}
+						</a>
+					))
+				}
+				<a
+					href={appStoreUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="text-ink/60 transition-colors hover:text-ink"
+				>
+					{t('nav.appstore')}
+				</a>
+				<a
+					href="https://100ideas.net"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="text-ink/60 transition-colors hover:text-ink"
+				>
+					{t('footer.by')}
+				</a>
+			</nav>
+		</div>
+	</div>
+</footer>

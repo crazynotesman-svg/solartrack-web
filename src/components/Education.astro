@@ -1,6 +1,7 @@
 ---
 // ---------------------------------------------------------------------------
 // Education — 当日 6 段光影时间轴（真实 App 的时段列表）+ 真实 Today 截图
+//                 + Glossary：定义句 + 黄金/蓝调对比表（GEO 高价值素材）
 // ---------------------------------------------------------------------------
 import { getLangFromUrl, useTranslations } from '../i18n/ui';
 
@@ -66,5 +67,45 @@ const phases = [
 				decoding="async"
 			/>
 		</figure>
+	</div>
+
+	<!-- Glossary：定义句 + 黄金/蓝调对比表（答案前置 + 对比表，AI 高引用格式） -->
+	<div class="mt-16 border-t border-line pt-12">
+		<div class="grid gap-8 md:grid-cols-2">
+			<div>
+				<h3 class="text-lg font-semibold text-ink">{t('education.phase.golden')}</h3>
+				<p class="mt-2 text-sm leading-relaxed text-ink/70">{t('education.def.golden')}</p>
+			</div>
+			<div>
+				<h3 class="text-lg font-semibold text-ink">{t('education.phase.blue')}</h3>
+				<p class="mt-2 text-sm leading-relaxed text-ink/70">{t('education.def.blue')}</p>
+			</div>
+		</div>
+
+		<div class="mt-8 overflow-hidden rounded-2xl border border-line">
+			<table class="w-full text-left text-sm">
+				<thead>
+					<tr class="bg-card/60 text-ink/70">
+						<th class="px-4 py-3 font-medium">{t('education.col.duration')}</th>
+						<th class="px-4 py-3 font-medium">{t('education.col.light')}</th>
+						<th class="px-4 py-3 font-medium">{t('education.col.best')}</th>
+					</tr>
+				</thead>
+				<tbody class="divide-y divide-line">
+					<tr>
+						<td class="px-4 py-3 text-ink">{t('education.row.golden.duration')}</td>
+						<td class="px-4 py-3 text-ink">{t('education.row.golden.light')}</td>
+						<td class="px-4 py-3 text-ink/80">{t('education.row.golden.best')}</td>
+					</tr>
+					<tr>
+						<td class="px-4 py-3 text-ink">{t('education.row.blue.duration')}</td>
+						<td class="px-4 py-3 text-ink">{t('education.row.blue.light')}</td>
+						<td class="px-4 py-3 text-ink/80">{t('education.row.blue.best')}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p class="mt-4 text-xs text-ink/45">{t('education.note.source')}</p>
 	</div>
 </section>
